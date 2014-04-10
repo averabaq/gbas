@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:camel="http://camel.apache.org/schema/spring"	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context 
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://camel.apache.org/schema/spring 
+                        http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+	<!-- enabling annotation driven configuration -->
+	<context:annotation-config />
+
+	<camel:camelContext id="eventSubscriberCamelContext">
+		<camel:contextScan/>		        
+		<camel:template id="gbasTemplate" defaultEndpoint="gbas-activemq:queue:es.uc3m.softlab.cbi4api.gbas.event.bpaf" />
+		<camel:template id="gbasTemplate" defaultEndpoint="gbas-activemq:queue:es.uc3m.softlab.cbi4api.gbas.event.bpaf" />
+		
+        <camel:endpoint id="gbas.bpaf.queue.endpoint" uri="gbas-activemq:queue:es.uc3m.softlab.cbi4api.gbas.event.bpaf"/>
+        <camel:endpoint id="gbas.bpaf.queue.endpoint" uri="gbas-activemq:queue:es.uc3m.softlab.cbi4api.gbas.event.bpaf"/>
+		
+		<camel:route>
+			<camel:from	ref="gbas.bpaf.queue.endpoint" />
+		    <camel:convertBodyTo type="byte[]"/>
+		    <camel:process ref="/cbi4api-gbas/event-subscriber/service/etl-event-processor" />
+			<camel:to uri="gbas.bpaf.queue.endpoint" />
+		</camel:route>		
+	</camel:camelContext>		
+	
+</beans>

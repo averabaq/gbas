@@ -1,0 +1,314 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>bin</id>
+	<includeBaseDirectory>true</includeBaseDirectory>	
+	<moduleSets>
+		<moduleSet>
+			<sources>
+				<fileSets>
+					<fileSet>
+						<outputDirectory>doc/${module.artifactId}</outputDirectory>
+						<directory>target/site</directory>						
+					</fileSet>
+				</fileSets>
+			</sources>
+		</moduleSet>
+	</moduleSets>
+	<formats>
+		<format>tar.gz</format>
+		<!-- 
+		<format>tar.bz2</format>
+		<format>zip</format>
+		 -->
+	</formats>
+
+	<fileSets>
+        <!-- include project docs -->
+		<fileSet>
+			<directory>${project.basedir}/../../..</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>README*</include>
+				<include>LICENSE*</include>
+				<include>NOTICE*</include>
+			</includes>
+		</fileSet>
+
+        <!-- include third-party licenses -->
+		<fileSet>
+			<directory>${project.basedir}/../../../license</directory>
+			<outputDirectory>/lib</outputDirectory>
+			<includes>
+				<include>*LICENSE</include>
+			</includes>
+		</fileSet>
+
+        <!-- include init/shutdown scripts -->
+		<fileSet>
+			<directory>dist/bin</directory>
+			<outputDirectory>/bin</outputDirectory>			
+			<includes>
+				<include>startup.sh</include>
+                <include>shutdown.sh</include>
+			</includes>
+            <filtered>true</filtered>
+			<fileMode>0750</fileMode>
+		</fileSet>
+
+        <!-- include properties -->
+		<fileSet>
+			<directory>${project.basedir}/../../applications/gbas-war/src/main/resources</directory>
+			<outputDirectory>/etc</outputDirectory>
+			<includes>
+				<include>gbas.properties</include>
+			</includes>
+			<fileMode>0640</fileMode>
+		</fileSet>
+
+		<!-- include models -->
+        <fileSet>
+            <directory>${project.basedir}/../../applications/gbas-war/src/main/resources/models</directory>
+            <outputDirectory>/conf/models</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <fileMode>0640</fileMode>
+        </fileSet>
+
+        <!-- include conf -->
+        <fileSet>
+            <directory>dist/conf</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>configure</exclude>
+                <exclude>setenv.sh</exclude>
+            </excludes>
+            <fileMode>0640</fileMode>
+        </fileSet>
+
+        <!-- create var data dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/data</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create tomcat dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/tomcat</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create hbase dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/hbase/data</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create zookeeper dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/hbase/zookeeper</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create upload dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/upload</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create xes dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>var/xes</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create logs dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>logs</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+        <!-- create tmp dir -->
+        <fileSet>
+            <directory>dist/cfg</directory>
+            <outputDirectory>tmp</outputDirectory>
+            <directoryMode>0750</directoryMode>
+            <excludes>
+                <exclude>*</exclude>
+            </excludes>
+            <filtered>false</filtered>
+        </fileSet>
+
+	</fileSets>
+
+	<files>
+        <!-- include GBAS app context -->
+        <file>
+			<source>dist/apps/tomcat/context/gbas.xml</source>
+			<outputDirectory>/apps/apache-tomcat-${org.apache.tomcat.version}/conf/Catalina/localhost</outputDirectory>
+		</file>
+        <!-- overrides hbase-site -->
+        <file>
+            <source>dist/apps/hbase/hbase-site.xml</source>
+            <outputDirectory>/apps/hbase-${org.apache.hbase.version}/conf</outputDirectory>
+        </file>
+        <!-- makes configure file executable -->
+        <file>
+            <source>dist/conf/configure</source>
+            <outputDirectory>/conf</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>0750</fileMode>
+        </file>
+        <!-- makes configure file executable -->
+        <file>
+            <source>dist/conf/setenv.sh</source>
+            <outputDirectory>/conf</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>0750</fileMode>
+        </file>
+	</files>
+
+	<dependencySets>
+        <!-- include tomcat app -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <includes>
+                <include>org.apache.tomcat:tomcat</include>
+            </includes>
+            <outputDirectory>/apps</outputDirectory>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <excludes>
+                    <exclude>**/webapps/**</exclude>
+                    <exclude>**/temp/*</exclude>
+                    <exclude>**/README*</exclude>
+                    <exclude>**/LICENSE*</exclude>
+                    <exclude>**/NOTICE*</exclude>
+                    <exclude>**/RELEASE-NOTES</exclude>
+                    <exclude>**/*.txt</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+
+        <!-- include hadoop app -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <includes>
+                <include>org.apache.hadoop:hadoop-dist</include>
+            </includes>
+            <outputDirectory>/apps</outputDirectory>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <excludes>
+                    <exclude>**/src/**</exclude>
+                    <exclude>**/docs/**</exclude>
+                    <exclude>**/README*</exclude>
+                    <exclude>**/LICENSE*</exclude>
+                    <exclude>**/NOTICE*</exclude>
+                    <exclude>**/RELEASE-NOTES</exclude>
+                    <exclude>**/*.txt</exclude>
+                    <exclude>**/build.xml</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+
+        <!-- include hbase app -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <includes>
+                <include>org.apache.hbase:hbase-dist</include>
+            </includes>
+            <outputDirectory>/apps</outputDirectory>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <excludes>
+                    <exclude>**/src/**</exclude>
+                    <exclude>**/docs/**</exclude>
+                    <exclude>**/README*</exclude>
+                    <exclude>**/LICENSE*</exclude>
+                    <exclude>**/NOTICE*</exclude>
+                    <exclude>**/RELEASE-NOTES</exclude>
+                    <exclude>**/*.txt</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+
+        <!-- include hbase app -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <includes>
+                <include>org.apache.hive:hive-dist</include>
+            </includes>
+            <outputDirectory>/apps</outputDirectory>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+            <unpackOptions>
+                <excludes>
+                    <exclude>**/src/**</exclude>
+                    <exclude>**/docs/**</exclude>
+                    <exclude>**/examples/**</exclude>
+                    <exclude>**/README*</exclude>
+                    <exclude>**/LICENSE*</exclude>
+                    <exclude>**/NOTICE*</exclude>
+                    <exclude>**/RELEASE-NOTES</exclude>
+                    <exclude>**/*.txt</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+
+        <!-- include gbas app -->
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <includes>
+                <include>es.uc3m.softlab.cbi4api.gbas:gbas</include>
+            </includes>
+            <outputDirectory>/apps/apache-tomcat-${org.apache.tomcat.version}/webapps/gbas</outputDirectory>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+        </dependencySet>
+	</dependencySets>	
+</assembly>

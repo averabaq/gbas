@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+    
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-classic-skin</artifactId>
+		<version>1.0</version>
+	</skin>
+  
+	<poweredBy>
+		<logo name="Maven" href="http://maven.apache.org"
+			img="http://maven.apache.org/images/logos/maven-inside.png"/>
+	</poweredBy>
+  
+  	<bannerRight>
+		<name>Apache</name>
+		<src>http://maven.apache.org/images/apache-maven-project-blue.png</src>
+		<href>http://www.apache.org</href>
+	</bannerRight>
+ 
+	<bannerLeft>
+		<name>Universidad Carlos III de Madrid</name>
+		<src>http://www.uc3m.es/portal/page/portal/repositorio_archivos/Imagenes/logo_0.png</src>
+		<href>http://www.uc3m.es</href>
+	</bannerLeft>	
+
+	<body>
+		<links>
+			<item name="Universidad Carlos III de Madrid" href="http://www.uc3m.es" />
+			<item name="IT Department" href="http://www.inf.uc3m.es" />
+			<item name="Apache" href="http://www.apache.org" />
+			<item name="Maven" href="http://maven.apache.org" />
+    		</links>
+
+		<menu name="Product">
+			<!--						
+			<item name="Introduction" href="index.html"/>
+			<item name="Download" href="download.html"/>
+			<item name="Release Notes" href="release-notes.html" />
+			<item name="General Information" href="about.html"/>
+			-->
+		</menu>
+
+		<menu ref="modules"/>
+		
+		<menu ref="reports"/>
+
+	</body>
+</project>

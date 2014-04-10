@@ -1,0 +1,9 @@
+#!/bin/bash
+
+GBAS_HOME="/opt/cbi4api/gbas"
+export HADOOP_HOME="$GBAS_HOME/apps/hadoop-${org.apache.hadoop.version}"
+export HIVE_HOME="$GBAS_HOME/apps/hive-${org.apache.hive.version}"
+
+echo "Configuring GBAS..."
+"$HIVE_HOME/bin/hive" < $GBAS_HOME/conf/hive/setup.sql > /dev/null 2>&1
+echo "Configuration complete."
