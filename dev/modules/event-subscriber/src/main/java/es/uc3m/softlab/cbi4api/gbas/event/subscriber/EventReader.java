@@ -5,7 +5,7 @@
  */
 package es.uc3m.softlab.cbi4api.gbas.event.subscriber;
 
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event;
 
 import org.apache.camel.Exchange;
 

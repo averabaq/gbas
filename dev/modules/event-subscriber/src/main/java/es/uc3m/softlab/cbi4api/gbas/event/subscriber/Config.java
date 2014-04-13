@@ -56,17 +56,17 @@ public class Config {
 		return url;
     }
     /**
-     * Gets the current GBAS node identifier.
-     * @return GBAS node identifier.
+     * Gets the current GBAS global process definition.
+     * @return GBAS global process definition.
      */
-    public String getNodeId() {
+    public String getGlobalProcessDefinition() {
         String value = null;
         try {
             ResourceBundle propFile = ResourceBundle.getBundle(StaticResources.APP_CONFIG_RESOURCE_BUNDLE);
-            value = propFile.getString(StaticResources.GBAS_NODE_ID_RESOURCE_BUNDLE_KEY);
+            value = propFile.getString(StaticResources.GBAS_GLOBAL_PROCESS_DEF_RESOURCE_BUNDLE_KEY);
         }
         catch (MissingResourceException mre) {
-            logger.warn(String.format("Not found '%s' property. Is it defined?", StaticResources.GBAS_NODE_ID_RESOURCE_BUNDLE_KEY));
+            logger.warn(String.format("Not found '%s' property. Is it defined?", StaticResources.GBAS_GLOBAL_PROCESS_DEF_RESOURCE_BUNDLE_KEY));
             logger.error(mre.getMessage());
         }
         return value;

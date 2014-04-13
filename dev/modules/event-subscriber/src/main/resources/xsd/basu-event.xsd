@@ -7,9 +7,9 @@
   ***********************************************************
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:gbas="http://www.uc3m.es/softlab/gbas/event"
+	xmlns:gbas="http://www.uc3m.es/softlab/basu/event"
 	xmlns:bpaf="http://www.wfmc.org/2009/BPAF2.0"
-	targetNamespace="http://www.uc3m.es/softlab/gbas/event">
+	targetNamespace="http://www.uc3m.es/softlab/basu/event">
 	<xs:annotation>
 		<xs:documentation xml:lang="en">
 			BPAF (Business Process Analytics Format) extension for 

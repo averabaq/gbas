@@ -8,9 +8,9 @@
         <xjc:serializable uid="1"/>       	        
         <xjc:javaType name="java.util.Calendar" xmlType="xs:dateTime" adapter="es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.TimeStampAdapter" />
     </jaxb:globalBindings>
-    <jaxb:bindings schemaLocation="xsd/gbas-event.xsd">
+    <jaxb:bindings schemaLocation="xsd/basu-event.xsd">
     	<jaxb:schemaBindings>    		
-    		<jaxb:package name="es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event" />
+    		<jaxb:package name="es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event" />
     	</jaxb:schemaBindings>        
     </jaxb:bindings> 
     <!-- 

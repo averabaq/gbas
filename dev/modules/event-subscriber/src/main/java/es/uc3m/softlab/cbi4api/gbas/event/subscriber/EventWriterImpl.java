@@ -46,16 +46,14 @@ public class EventWriterImpl implements EventWriter {
      * output the channel in xml format.  
      * @param exchange exchange data object to route. 
      * @param bpafEvent BPAF event {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event} to store
-     * @param gbasEvent GBAS event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}
+     * @param gbasEvent GBAS event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}
 	 *  object to forward in xml format to the GBAS output channel.
      * @throws EventException if any illegal data access or inconsistent event data error occurred.
      */
     @Override
-    public void loadEvent(Exchange exchange, Event bpafEvent, es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event gbasEvent) throws EventException {
+    public void loadEvent(Exchange exchange, Event bpafEvent, es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event gbasEvent) throws EventException {
     	// store the BPAF event in the data source
     	storeEvent(bpafEvent);
-        // updates the message attributes with specific GBAS instance data
-        syncMessageAttributes(bpafEvent, gbasEvent);
     	// marshall back the processed event 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(baos));  	    
@@ -101,17 +99,4 @@ public class EventWriterImpl implements EventWriter {
 		eventFacade.storeEvent(event);
 		logger.info("Event " + event + " stored successfully.");
 	}
-    /**
-     * Synchronize the incoming message attributes from external sources (listeners) with
-     * the GBAS managed data in BPAF format.
-     * @param bpafEvent BPAF stored event.
-     * @param gbasEvent GBAS incoming event.
-     */
-    private void syncMessageAttributes(Event bpafEvent, es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event gbasEvent) {
-        gbasEvent.setServerID(config.getNodeId());
-        gbasEvent.getCorrelation().setProcessInstanceID(bpafEvent.getProcessInstanceID());
-        gbasEvent.setProcessDefinitionID(bpafEvent.getProcessDefinitionID());
-        gbasEvent.setActivityDefinitionID(bpafEvent.getActivityDefinitionID());
-        gbasEvent.setActivityInstanceID(bpafEvent.getActivityInstanceID());
-    }
 }

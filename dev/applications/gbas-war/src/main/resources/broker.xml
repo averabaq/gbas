@@ -9,7 +9,10 @@
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
+            <!--
 			<value>${config}</value>
+			-->
+            <value>classpath:gbas.properties</value>
 		</property>
 	</bean>
     
@@ -95,9 +98,9 @@
 			<transportConnector name="vm" uri="vm://gbasBroker" />
 			<!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
 			<transportConnector name="tcp"
-				uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600" />
+				uri="tcp://0.0.0.0:61611?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600" />
 			<transportConnector name="amqp"
-				uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600" />
+				uri="amqp://0.0.0.0:5682?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600" />
 		</transportConnectors>
 
 		<!-- destroy the spring context on shutdown -->

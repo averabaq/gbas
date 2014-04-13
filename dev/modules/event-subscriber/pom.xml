@@ -472,7 +472,7 @@
 							<extension>true</extension>
 							<verbose>true</verbose>
 							<includeSchemas>
-								<includeSchema>xsd/gbas-event.xsd</includeSchema>
+								<includeSchema>xsd/basu-event.xsd</includeSchema>
 							</includeSchemas>
 							<includeBindings>
 								<includeBinding>jaxb-binding.xjb</includeBinding>

@@ -22,9 +22,9 @@ import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ModelException;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ModelFacade;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ProcessInstanceException;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ProcessInstanceFacade;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationData;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationData;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +51,14 @@ public class EventCorrelatorImpl implements EventCorrelator {
     @Autowired private ActivityInstanceFacade activityInstanceFacade;
 
     /**
-     * Correlates the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}
+     * Correlates the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}
      * by obtaining an existing process instance or creating a new one if necessary. 
-     * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event} to get the associated
+     * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event} to get the associated
      * process instance if it exists, otherwise it creates a new one.
      * @param source {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Source} associated to the incoming
-     * {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}.
+     * {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}.
      * @return exact {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.ProcessInstance} associated to properly
-     * correlated the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}.
+     * correlated the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}.
      * @throws ProcessInstanceException if any process instance exception occurred during processing.
      * @throws ModelException if any model exception occurred during processing.
      * @throws EventException if any event exception occurred during processing.
@@ -112,15 +112,15 @@ public class EventCorrelatorImpl implements EventCorrelator {
 		return processInstance;
     }
     /**
-     * Correlates the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}
+     * Correlates the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}
      * by obtaining an existing process instance or creating a new one if necessary. 
-     * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event} to get the associated
+     * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event} to get the associated
      * process instance if it exists, otherwise it creates a new one.
      * @param source {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Source} associated to the
      * {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Model} of the incoming
-     * {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}.
+     * {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}.
      * @return right {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.ActivityInstance} associated to properly
-     * correlated the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event}.
+     * correlated the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}.
      * @throws ActivityInstanceException if any activity instance exception occurred during processing.
      * @throws ModelException if any model exception occurred during processing.
      * @throws EventException if any event exception occurred during processing.
@@ -196,9 +196,9 @@ public class EventCorrelatorImpl implements EventCorrelator {
 		return activityInstance;
     }
 	/**
-	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement}
+	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement}
 	 * objects into a list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventCorrelation} objects.
-	 * @param correlations list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement} objects.
+	 * @param correlations list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement} objects.
 	 * @return list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventCorrelation} objects.
 	 */
 	private Set<EventCorrelation> transformCorrelation(List<CorrelationElement> correlations) {

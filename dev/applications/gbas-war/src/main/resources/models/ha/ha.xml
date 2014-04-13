@@ -1,61 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gbasLoaderConfig name="ha">
     <sources>
-        <source id="NA" name="North Area">
-            <description>North Area</description>
+        <source id="BASU-01" name="Business Analytics Service Unit (Node 01)">
+            <description>Business Analytics Service Unit (Node 01)</description>
             <inetAddress>localhost</inetAddress>
-            <port>8080</port>
+            <port>8081</port>
         </source>
-        <source id="WM" name="West Midlands">
-            <description>West Midlands</description>
+        <source id="BASU-02" name="Business Analytics Service Unit (Node 02)">
+            <description>Business Analytics Service Unit (Node 02)</description>
             <inetAddress>localhost</inetAddress>
-            <port>8080</port>
+            <port>8081</port>
         </source>
-        <source id="EM" name="East Midlands">
-            <description>East Midlands</description>
+        <source id="BASU-03" name="Business Analytics Service Unit (Node 03)">
+            <description>Business Analytics Service Unit (Node 03)</description>
             <inetAddress>localhost</inetAddress>
-            <port>8080</port>
+            <port>8081</port>
         </source>
-        <source id="SA" name="South Area">
-            <description>South Area</description>
+        <source id="BASU-04" name="Business Analytics Service Unit (Node 04)">
+            <description>Business Analytics Service Unit (Node 04)</description>
             <inetAddress>localhost</inetAddress>
-            <port>8080</port>
+            <port>8081</port>
         </source>
     </sources>
-    <processModels>
-        <processModel id="CartNew01" name="Journey(CartNew01)[Caterham - Newcastle]">
-            <source>SA</source>
-            <description>Journey(CartNew01)[Caterham - Newcastle] (South Area)</description>
-        </processModel>
-        <processModel id="CartNew01" name="Journey(CartNew01)[Caterham - Newcastle]">
-            <source>WM</source>
-            <description>Journey(CartNew01)[Caterham - Newcastle] (West Midlands)</description>
-        </processModel>
-        <processModel id="CartNew01" name="Journey(CartNew01)[Caterham - Newcastle]">
-            <source>EM</source>
-            <description>Journey(CartNew01)[Caterham - Newcastle] (East Midlands)</description>
-        </processModel>
-        <processModel id="CartNew01" name="Journey(CartNew01)[Caterham - Newcastle]">
-            <source>NA</source>
-            <description>Journey(CartNew01)[Caterham - Newcastle] (North Area)</description>
-        </processModel>
-        <processModel id="ShamBrix01" name="Journey(ShamBrix01)[Southampton - Brixton]">
-            <source>SA</source>
-            <description>Journey(ShamBrix01)[Southampton - Brixton] (South Area)</description>
-        </processModel>
-        <processModel id="ChestDart01" name="Journey(ChestDart01)[Chesthunt - Dartford]">
-            <source>SA</source>
-            <description>Journey(ChestDart01)[Chesthunt - Dartford] (South Area)</description>
-        </processModel>
-        <processModel id="BirmStaf01" name="Journey(BirmStaf01)[Birmingham - Staffordshire]">
-            <source>WM</source>
-            <description>Journey(BirmStaf01)[Birmingham - Staffordshire] (West Midlands)</description>
-        </processModel>
-        <processModel id="BirmStaf02" name="Journey(BirmStaf02)[Birmingham - Staffordshire]">
-            <source>WM</source>
-            <description>Journey(BirmStaf02)[Birmingham - Staffordshire] (West Midlands)</description>
-        </processModel>
-    </processModels>
 </gbasLoaderConfig>
 
 

@@ -11,12 +11,12 @@ import es.uc3m.softlab.cbi4api.gbas.event.subscriber.EventConverter;
 import es.uc3m.softlab.cbi4api.gbas.event.subscriber.EventReader;
 import es.uc3m.softlab.cbi4api.gbas.event.subscriber.EventWriter;
 import es.uc3m.softlab.cbi4api.gbas.event.subscriber.StaticResources;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Correlation;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationData;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event.EventDetails;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.State;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Correlation;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationData;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event.EventDetails;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.State;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;

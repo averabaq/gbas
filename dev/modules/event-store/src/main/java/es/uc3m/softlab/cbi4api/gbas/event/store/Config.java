@@ -46,7 +46,6 @@ public class Config {
     }   
 	/**
      * Gets the string value of the key property given.
-     * @param key key property.
      * @return value of the key property.
      */
     public boolean isStatsActive() {
@@ -77,7 +76,7 @@ public class Config {
 		String locales[] = strLocale.split("_");
 		try {
 			locale = new Locale(locales[0], locales[1]);
-		} catch(ArrayIndexOutOfBoundsException auobex) {
+		} catch(ArrayIndexOutOfBoundsException aiobex) {
 			logger.warn("Locale from properties file bad formed. Setting default locale...");
 			locales = StaticResources.DEFAULT_LOCALE.split("_");		
 			locale = new Locale(locales[0], locales[1]);

@@ -24,9 +24,9 @@ import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ModelFacade;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ProcessInstanceException;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.SourceException;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.SourceFacade;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.DataElement;
-import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Payload;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.DataElement;
+import es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Payload;
 
 
 import org.apache.log4j.Logger;
@@ -70,7 +70,7 @@ public class EventConverterImpl implements EventConverter {
      * @throws EventException if any event exception occurred during processing.
      * @throws SourceException if the source it is not defined at the database.
      */
-    public Event transform(es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Event event) throws SourceException, ModelException, ProcessInstanceException, ActivityInstanceException, EventException {
+    public Event transform(es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event event) throws SourceException, ModelException, ProcessInstanceException, ActivityInstanceException, EventException {
 		/* creates the new event */
     	Event evt = new Event();
 
@@ -118,10 +118,10 @@ public class EventConverterImpl implements EventConverter {
 		return evt;		
     }  
 	/**
-	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Payload}
+	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Payload}
 	 * objects into a list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventPayload} objects.
 	 * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event} to attach the payload.
-	 * @param payloads list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Payload} objects.
+	 * @param payloads list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Payload} objects.
 	 * @return list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventPayload} objects.
 	 */
 	private Set<EventPayload> transformPayload(Event event, List<Payload> payloads) {
@@ -138,10 +138,10 @@ public class EventConverterImpl implements EventConverter {
 		return _payloads;
 	}    
 	/**
-	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement}
+	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement}
 	 * objects into a list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventCorrelation} objects.
 	 * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event} to attach the correlation data.
-	 * @param correlations list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.CorrelationElement} objects.
+	 * @param correlations list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.CorrelationElement} objects.
 	 * @return list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventCorrelation} objects.
 	 */
 	private Set<EventCorrelation> transformCorrelation(Event event, List<CorrelationElement> correlations) {
@@ -158,10 +158,10 @@ public class EventConverterImpl implements EventConverter {
 		return eventCorrelations;
 	}
 	/**
-	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Payload}
+	 * Transform a list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Payload}
 	 * objects into a list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventPayload} objects.
 	 * @param event {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event} to attach the event data.
-	 * @param dataElements list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.gbas.event.Payload} objects.
+	 * @param dataElements list of {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Payload} objects.
 	 * @return list of {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.EventPayload} objects.
 	 */
 	private Set<EventData> transformData(Event event, List<DataElement> dataElements) {

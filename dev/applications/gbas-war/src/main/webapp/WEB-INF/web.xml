@@ -12,7 +12,7 @@
 	     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 	                         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	     id="f4bpa-web" version="2.5">
-	<description>CBI4API: GBAS - Business Analytics Service Unit</description>
+	<description>CBI4API: GBAS - Global Business Analytics Service</description>
 	<display-name>cbi4api-gbas</display-name>
 
     <!--
@@ -72,18 +72,6 @@
 	</context-param>
     -->
 
-    <!--
-    <servlet>
-        <servlet-name>gbas</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>gbas</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
-    -->
     <servlet>
         <servlet-name>gbas</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

@@ -15,7 +15,10 @@
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
+            <!--
 			<value>${config}</value>
+			-->
+            <value>classpath:gbas.properties</value>
 		</property>
 	</bean>
 	  
@@ -51,37 +54,5 @@
   		</property>
 	</bean> 		
     -->	
-    
-	<!-- GBAS activemq connection factory --> 
-	<amq:connectionFactory id="gbasConnectionFactory">
-		<property name="brokerURL" value="${cbi4api.gbas.activemq.broker.url}" />
-	</amq:connectionFactory>
 
-	<!-- GBAS activemq pooled connection factory -->
-	<bean id="gbasPooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
-		init-method="start" destroy-method="stop">
-		<property name="maxConnections" value="8" />
-		<property name="connectionFactory" ref="gbasConnectionFactory" />
-	</bean>
-
-	<!-- GBAS activemq jms configuration through a pooled connection -->
-	<bean id="gbasJmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
-		<property name="connectionFactory" ref="gbasPooledConnectionFactory" />
-		<property name="concurrentConsumers" value="10" />
-	</bean>
-
-	<!-- GBAS activemq endpoint -->
-	<bean id="gbas-activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-		<property name="configuration" ref="gbasJmsConfig" />
-	</bean>
- 	
- 	<!-- GBAS activemq configuration without pooling 
-	<bean id="gbas-activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-		<property name="connectionFactory">
-    		<bean class="org.apache.activemq.ActiveMQConnectionFactory">
-      			<property name="brokerURL" value="${cbi4api.gbas.activemq.broker.url}"/>
-    		</bean>
-  		</property>
-	</bean> 		
-    -->			
 </beans>

@@ -10,16 +10,14 @@
 						http://www.springframework.org/schema/mvc
                         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+    <!-- register and startup the activemq embedded broker -->
+    <import resource="classpath:broker.xml"/>
+    <!-- register the activemq context -->
+    <import resource="classpath:activemq-context.xml"/>
     <!-- register the event store module -->
     <import resource="classpath:spring-event-store.xml"/>
     <!-- register the event subscriber module -->
     <import resource="classpath:spring-event-subscriber.xml"/>
-    <!-- register the XES event publisher module -->
-    <import resource="classpath:spring-xes-event-publisher.xml"/>
-	<!-- register and startup the activemq embedded broker -->
-	<import resource="classpath:broker.xml"/>
-	<!-- register the activemq context -->
-	<import resource="classpath:activemq-context.xml"/>
 
 	<!-- register only UI related stuff -->
 	<context:component-scan base-package="es.uc3m.softlab.cbi4api.gbas.web" />

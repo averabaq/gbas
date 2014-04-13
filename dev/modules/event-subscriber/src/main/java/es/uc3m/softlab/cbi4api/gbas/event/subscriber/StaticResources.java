@@ -16,10 +16,8 @@ public class StaticResources {
     public static final String APP_CONFIG_RESOURCE_BUNDLE="gbas";
 	/** Module resource bundle */
 	public static final String MODULE_CONFIG_RESOURCE_BUNDLE="event-subscriber";
-	/** gbas-event BPAF xml schema classpath location */
-    public static final String GBAS_EVENT_BPAF_XML_SCHEMA_CLASSPATH_FILE="/xsd/gbas-event.xsd";
-    /** Charset encoding */
-    public static final String CHARSET_ENCODING = "UTF-8";
+	/** basu-event BPAF xml schema classpath location */
+    public static final String BASU_EVENT_BPAF_XML_SCHEMA_CLASSPATH_FILE="/xsd/basu-event.xsd";
     /** Default application locale */
     public static final String DEFAULT_LOCALE="en_IE";
 
@@ -27,8 +25,8 @@ public class StaticResources {
     public static final String LOCALE_RESOURCE_BUNDLE_KEY="cbi4api.gbas.event.subscriber.application.locale";
     /** Broker url bundle key */
     public static final String BROKER_URL_RESOURCE_BUNDLE_KEY="cbi4api.gbas.event.subscriber.activemq.broker.url";
-    /** GBAS node identifier bundle key */
-    public static final String GBAS_NODE_ID_RESOURCE_BUNDLE_KEY="cbi4api.gbas.node.id";
+    /** GBAS global process definition bundle key */
+    public static final String GBAS_GLOBAL_PROCESS_DEF_RESOURCE_BUNDLE_KEY="cbi4api.gbas.global.process.definition";
 
 	/** Component name for the event subscriber configuration */
 	public static final String COMPONENT_NAME_CONFIG = "eventSubscriberConfig";
