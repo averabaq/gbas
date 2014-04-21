@@ -11,7 +11,7 @@
 	<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 	<artifactId>gbas-prj</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<inceptionYear>2013</inceptionYear>	
 	<name>CBI4API (GBAS) - Main Project</name>
 	<description>

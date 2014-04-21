@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 		<artifactId>gbas-prj</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>	
 	<organization>
@@ -18,7 +18,7 @@
 	<artifactId>gbas</artifactId>
 	<inceptionYear>2013</inceptionYear>
 	<packaging>war</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>CBI4API (GBAS) - Web Archive</name>
 	<description>
 		Cloud-based Infrastructure for Advanced Process Intelligence (GBAS) - Web Archive
@@ -201,14 +201,14 @@
 		<dependency>
 			<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 			<artifactId>event-store</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<type>ejb</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 			<artifactId>event-subscriber</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>runtime</scope>
 		</dependency>
