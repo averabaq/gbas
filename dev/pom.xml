@@ -11,7 +11,7 @@
 	<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 	<artifactId>gbas-prj</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<inceptionYear>2013</inceptionYear>	
 	<name>CBI4API (GBAS) - Main Project</name>
 	<description>
@@ -134,19 +134,19 @@
 	<distributionManagement>
 		<downloadUrl>http://cbi4api.verasoft.es/downloads</downloadUrl>
 		<repository>
-			<id>verasoft</id>
+			<id>releases</id>
 			<name>VeraSoft Releases Repository</name>
 			<url>http://nexus.verasoft.es/nexus/content/repositories/releases</url>
 			<uniqueVersion>false</uniqueVersion>
 		</repository>
 		<snapshotRepository>
-			<id>verasoft</id>
+			<id>snapshots</id>
 			<name>VeraSoft Snapshots Repository</name>
 			<url>http://nexus.verasoft.es/nexus/content/repositories/snapshots</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 		<site>
-			<id>verasoft</id>
+			<id>verasoft-site</id>
 			<name>VeraSoft Development Site</name>
 			<url>scp://cbi4api.verasoft.es/var/www/cbi4api/doc/gbas</url>
 		</site>
