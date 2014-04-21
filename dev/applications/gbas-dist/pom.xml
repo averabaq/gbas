@@ -156,7 +156,7 @@
 		<site>
 			<id>verasoft-site</id>
 			<name>VeraSoft Development Site</name>
-			<url>scp://cbi4api.verasoft.es/var/www/cbi4api/doc/gbas/gbas-dist</url>
+			<url>scp://cbi4api.verasoft.es/var/www/cbi4api/doc/gbas/gbas-ode</url>
 		</site>
 	</distributionManagement>
 	<developers>
