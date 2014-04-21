@@ -43,12 +43,16 @@ import org.springframework.stereotype.Component;
 public class EventCorrelatorImpl implements EventCorrelator {
 	/** Logger for tracing */
 	private Logger logger = Logger.getLogger(EventCorrelatorImpl.class);
+    /** Configuration object */
+    @Autowired private Config config;
     /** Model session facade */
     @Autowired private ModelFacade modelFacade;
     /** Process instance session facade */
     @Autowired private ProcessInstanceFacade processInstanceFacade;   
     /** Activity instance session facade */
     @Autowired private ActivityInstanceFacade activityInstanceFacade;
+    /** Event queue for handling events in quarantine state */
+    @Autowired private EventQueuer eventQueuer;
 
     /**
      * Correlates the incoming {@link es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event}
@@ -67,11 +71,20 @@ public class EventCorrelatorImpl implements EventCorrelator {
     public ProcessInstance correlateProcess(Event event, Source source) throws ModelException, ProcessInstanceException, EventException {
 		logger.debug("Correlating incoming event with id " + event.getEventID());
     	ProcessInstance processInstance = null;
+        // overwrites the global process definition
+        event.setProcessDefinitionID(config.getGlobalProcessDefinition());
+        event.setProcessName(config.getGlobalProcessName());
 		// gets the process model 
 		Model processModel = modelFacade.getModel(event.getProcessDefinitionID(), source, ModelType.PROCESS);
 		if (processModel == null) {
-			logger.error("The model " + event.getProcessDefinitionID() + " of source " + source + " could not be found in the repository. Is it defined?");
-			throw new ModelException(StaticResources.ERROR_GENERIC_EVENT_SUBSCRIBER_UNEXPECTED_EXCEPTION, "The model " + event.getProcessDefinitionID() + " of source " + source + " could not be found in the repository. Is it defined?");
+			logger.info("The model " + event.getProcessDefinitionID() + " of source " + source + " could not be found in the repository. It is assumed that it must be overwritten by the global process definition model");
+            processModel = new Model();
+            processModel.setType(ModelType.PROCESS);
+            processModel.setName(event.getProcessDefinitionID());
+            processModel.setModelSrcId(event.getProcessDefinitionID());
+            processModel.setSource(source);
+            // save activity model
+            modelFacade.saveModel(processModel);
 		}
 		// If the process instance identifier is provided at source 
 		if (event.getCorrelation().isSetProcessInstanceID()) {
@@ -131,7 +144,7 @@ public class EventCorrelatorImpl implements EventCorrelator {
     	ActivityInstance activityInstance = null;		
 		// if the event refers to an activity 
 		if (event.isSetActivityInstanceID()) {
-			logger.debug("Incoming event with id " + event.getEventID() + " comes from a bpel engine or alternative system that provides a souce activity instance identifier.");
+			logger.debug("Incoming event with id " + event.getEventID() + " comes from a bpel engine or alternative system that provides a source activity instance identifier.");
 			// gets the activity model 
 			Model activityModel = (Model)modelFacade.getModel(event.getActivityDefinitionID(), source, ModelType.ACTIVITY);
 			// if the activity model has not been defined 
@@ -141,6 +154,8 @@ public class EventCorrelatorImpl implements EventCorrelator {
 				activityModel.setName(event.getActivityDefinitionID());	
 				activityModel.setModelSrcId(event.getActivityDefinitionID());
 				activityModel.setSource(source);
+                // save activity model
+                modelFacade.saveModel(activityModel);
 			}										
 			// gets the activity instance from the event store 
 			String activityInstanceId = event.getActivityInstanceID();
@@ -153,9 +168,28 @@ public class EventCorrelatorImpl implements EventCorrelator {
 				activityInstance.setInstanceSrcId(activityInstanceId);
 				activityInstance.setName(event.getActivityName());
 				activityInstance.setModel(activityModel);
-				if (event.isSetActivityParentID()) {
-					ActivityInstance parent = activityInstanceFacade.getActivityInstance(event.getActivityParentID(), activityModel);
-					activityInstance.setParent(parent);
+				if (event.isSetActivityParent()) {
+                    Model parentActivityModel = (Model)modelFacade.getModel(event.getActivityParent().getActivityDefinitionID(), source, ModelType.ACTIVITY);
+                    if (parentActivityModel == null) {
+                        parentActivityModel = new Model();
+                        parentActivityModel.setType(ModelType.ACTIVITY);
+                        parentActivityModel.setName(event.getActivityParent().getActivityDefinitionID());
+                        parentActivityModel.setModelSrcId(event.getActivityParent().getActivityDefinitionID());
+                        parentActivityModel.setSource(source);
+                        // save parent activity model
+                        modelFacade.saveModel(parentActivityModel);
+                    }
+					ActivityInstance parent = activityInstanceFacade.getActivityInstance(event.getActivityParent().getActivityInstanceID(), parentActivityModel);
+                    activityInstance.setParent(parent);
+                    if (parent == null) {
+                        Model parentModel = new Model();
+                        parentModel.setModelSrcId(event.getActivityParent().getActivityDefinitionID());
+                        ActivityInstance parentActivity = new ActivityInstance();
+                        parentActivity.setInstanceSrcId(event.getActivityParent().getActivityInstanceID());
+                        parentActivity.setModel(parentModel);
+                        activityInstance.setParent(parentActivity);
+                        eventQueuer.addQuarantine(activityInstance);
+                    }
 				}
 			} 			
 		} else {

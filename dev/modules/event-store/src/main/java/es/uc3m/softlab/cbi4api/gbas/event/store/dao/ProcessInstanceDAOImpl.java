@@ -129,7 +129,7 @@ public class ProcessInstanceDAOImpl implements ProcessInstanceDAO {
 	 */
     @Override
     public ProcessInstance findBySourceData(String processId, Model model) throws IllegalArgumentException {
-		logger.debug("Retrieving process instance with source data as pairs of (" + processId + ", " + model.getSource() + ")...");
+		logger.debug("Retrieving process instance with source data as pairs of (" + processId + ", " + model.getId() + ")...");
 		Model _model = modelDAO.findBySourceData(model.getModelSrcId(), model.getSource(), ModelType.PROCESS);
 		if (_model == null)
 			return null;
@@ -144,7 +144,7 @@ public class ProcessInstanceDAOImpl implements ProcessInstanceDAO {
     	// set parameters
     	String _sql = sql.toString();
     	_sql = _sql.replace("[ENTITY]", HProcessInstance.class.getName());
-    	_sql = _sql.replace(":sourceId", "'" + processId + "'");
+    	_sql = _sql.replace(":sourceId", "\"" + processId + "\"");
     	_sql = _sql.replace(":modelId", "" + _model.getId() + "");
     	// creates query without setting parameters
     	Query query = entityManager.createQuery(_sql);
@@ -172,7 +172,9 @@ public class ProcessInstanceDAOImpl implements ProcessInstanceDAO {
 			logger.fatal("This message should never appear. Inconsistence in the database has been found. There exists two or more different local process instances for a unique pair of source and source process instances.");			
 			throw new IllegalArgumentException("Inconsistence in the database has been found. There exists two or more different local process instances for a unique pair of source and source process instances.");
 		}
-		ProcessInstance instance = BusinessObjectAssembler.getInstance().toBusinessObject(hinstance);
+        // gets the process instance to undertake the event correlation
+        ProcessInstance instance = findById(hinstance.getId());
+        logger.debug("Process instance " + instance + " retrieved successfully.");
 		return instance;
 	}   
 	/**
@@ -300,7 +302,7 @@ public class ProcessInstanceDAOImpl implements ProcessInstanceDAO {
 	 */
     @Override
     public ProcessInstance findByCorrelationData(Set<EventCorrelation> correlation, Model model) throws IllegalArgumentException {
-    	logger.debug("Retrieving process instance associted to a determined correlation data from the model " + model + " associated to the source " + model.getSource() + "...");
+    	logger.debug("Retrieving process instance associated to a determined correlation data from the model " + model + "...");
 		if (correlation == null || correlation.isEmpty()) {
 			throw new IllegalArgumentException("Cannot retrieve process instance because no correlation data has been provided.");
 		}

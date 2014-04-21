@@ -104,7 +104,8 @@ public class BusinessObjectAssembler {
     	event.setTimestamp(new Date(hevent.getTimestamp()));
     	event.setEventDetails(new EventDetail());
     	event.getEventDetails().setCurrentState(State.valueOf(hevent.getCurrentState()));
-    	event.getEventDetails().setPreviousState(State.valueOf(hevent.getPreviousState()));
+        if (hevent.getPreviousState() != null)
+    	    event.getEventDetails().setPreviousState(State.valueOf(hevent.getPreviousState()));
     	event.setDataElement(new HashSet<EventData>());
     	event.setCorrelations(new HashSet<EventCorrelation>());
     	event.setPayload(new HashSet<EventPayload>());	

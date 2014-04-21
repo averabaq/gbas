@@ -27,6 +27,8 @@ public class StaticResources {
     public static final String BROKER_URL_RESOURCE_BUNDLE_KEY="cbi4api.gbas.event.subscriber.activemq.broker.url";
     /** GBAS global process definition bundle key */
     public static final String GBAS_GLOBAL_PROCESS_DEF_RESOURCE_BUNDLE_KEY="cbi4api.gbas.global.process.definition";
+    /** GBAS global process name bundle key */
+    public static final String GBAS_GLOBAL_PROCESS_NAME_RESOURCE_BUNDLE_KEY="cbi4api.gbas.global.process.name";
 
 	/** Component name for the event subscriber configuration */
 	public static final String COMPONENT_NAME_CONFIG = "eventSubscriberConfig";
@@ -38,7 +40,9 @@ public class StaticResources {
 	public static final String COMPONENT_NAME_EVENT_CONVERTER = "/cbi4api-gbas/event-subscriber/component/EventConverter";
 	/** Component name for the event writer */
 	public static final String COMPONENT_NAME_EVENT_CORRELATOR = "/cbi4api-gbas/event-subscriber/component/EventCorrelator";
-	
+    /** Component name for the event queuer */
+    public static final String COMPONENT_NAME_EVENT_QUEUER = "/cbi4api-gbas/event-subscriber/component/EventQueuer";
+
 	/** Service name for the event subscriber ETL (Extract, Transform & Load) module */
 	public static final String SERVICE_NAME_ETL_PROCESSOR = "/cbi4api-gbas/event-subscriber/service/etl-event-processor";
 	

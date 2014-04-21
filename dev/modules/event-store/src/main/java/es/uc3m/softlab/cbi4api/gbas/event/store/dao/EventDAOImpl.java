@@ -570,33 +570,51 @@ public class EventDAOImpl implements EventDAO {
 	 * @throws IllegalArgumentException if an illegal argument error occurred.
 	 */
 	private void saveCorrelations(Event event) throws IllegalArgumentException {
-		logger.debug("Saving event correlations of event " + event + "...");	
-		for (EventCorrelation correlation : event.getCorrelations()) {
-			HEventCorrelation hcorrelation = BusinessObjectAssembler.getInstance().toEntity(correlation);
-			// insert event	correlation	
-			long ini = System.nanoTime();
-			entityManager.persist(hcorrelation);
-			long end = System.nanoTime();
-			stats.writeStat(Stats.Operation.WRITE, HEventCorrelation.class, hcorrelation, ini, end);
-			logger.debug("Event correlations " + correlation + " saved successfully.");
-		}
+        logger.debug("Saving event correlations of event " + event + "...");
+        for (EventCorrelation correlation : event.getCorrelations()) {
+            HEventCorrelation hcorrelation = BusinessObjectAssembler.getInstance().toEntity(correlation);
+            // insert event	correlation
+            long ini = System.nanoTime();
+            entityManager.persist(hcorrelation);
+            long end = System.nanoTime();
+            stats.writeStat(Stats.Operation.WRITE, HEventCorrelation.class, hcorrelation, ini, end);
+            logger.debug("Event correlations " + correlation + " saved successfully.");
+        }
         if (!event.getCorrelations().isEmpty()) {
-            // insert event	correlation index
-            HEventCorrelationIndex index = HIndexBuilder.getInstance().buildCorrelationIndex(event);
-             // save the index if it doesn't exist
+            // insert event	correlation index for process
+            HEventCorrelationIndex index = HIndexBuilder.getInstance().buildProcessCorrelationIndex(event);
+            // save the index for the process if it doesn't exist
             if (entityManager.find(HEventCorrelationIndex.class, index.getCorrelationSet()) == null) {
                 long ini = System.nanoTime();
                 entityManager.persist(index);
                 long end = System.nanoTime();
                 stats.writeStat(Stats.Operation.WRITE, HEventCorrelationIndex.class, index, ini, end);
-                logger.debug("Event correlations of event " + event + " indexed successfully.");
+                logger.debug("Event process correlations of event " + event + " indexed successfully.");
             } else {
-                // TODO: add eventID to index
                 long ini = System.nanoTime();
                 entityManager.merge(index);
                 long end = System.nanoTime();
                 stats.writeStat(Stats.Operation.UPDATE, HEventCorrelationIndex.class, index, ini, end);
-                logger.debug("Event correlations of event " + event + " indexed (updated) successfully.");
+                logger.debug("Event process correlations of event " + event + " indexed (updated) successfully.");
+            }
+            // saves the index for the activity
+            if (event.getActivityInstance() != null) {
+                // insert event	correlation index for activity
+                index = HIndexBuilder.getInstance().buildActivityCorrelationIndex(event);
+                // save the index if it doesn't exist
+                if (entityManager.find(HEventCorrelationIndex.class, index.getCorrelationSet()) == null) {
+                    long ini = System.nanoTime();
+                    entityManager.persist(index);
+                    long end = System.nanoTime();
+                    stats.writeStat(Stats.Operation.WRITE, HEventCorrelationIndex.class, index, ini, end);
+                    logger.debug("Event activity correlations of event " + event + " indexed successfully.");
+                } else {
+                    long ini = System.nanoTime();
+                    entityManager.merge(index);
+                    long end = System.nanoTime();
+                    stats.writeStat(Stats.Operation.UPDATE, HEventCorrelationIndex.class, index, ini, end);
+                    logger.debug("Event activity correlations of event " + event + " indexed (updated) successfully.");
+                }
             }
         }
 	}

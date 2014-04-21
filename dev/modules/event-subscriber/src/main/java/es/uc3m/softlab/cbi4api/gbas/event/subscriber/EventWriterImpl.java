@@ -5,24 +5,21 @@
  */
 package es.uc3m.softlab.cbi4api.gbas.event.subscriber;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
+import es.uc3m.softlab.cbi4api.gbas.event.store.domain.ActivityInstance;
 import es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event;
+import es.uc3m.softlab.cbi4api.gbas.event.store.domain.Model;
+import es.uc3m.softlab.cbi4api.gbas.event.store.domain.Source;
+import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ActivityInstanceException;
+import es.uc3m.softlab.cbi4api.gbas.event.store.facade.ActivityInstanceFacade;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.EventException;
 import es.uc3m.softlab.cbi4api.gbas.event.store.facade.EventFacade;
 
 import org.apache.camel.Exchange;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Component implementation for writing events to the global data store. 
@@ -40,6 +37,8 @@ public class EventWriterImpl implements EventWriter {
     @Autowired private Config config;
 	/** Event session facade */
     @Autowired private EventFacade eventFacade;
+    /** Event queue for handling events in quarantine state */
+    @Autowired private EventQueuer eventQueuer;
 	
     /**
      * Stores the event in the data source and sets the processed event back to be forwarded to the
@@ -54,37 +53,6 @@ public class EventWriterImpl implements EventWriter {
     public void loadEvent(Exchange exchange, Event bpafEvent, es.uc3m.softlab.cbi4api.gbas.event.subscriber.xsd.basu.event.Event gbasEvent) throws EventException {
     	// store the BPAF event in the data source
     	storeEvent(bpafEvent);
-    	// marshall back the processed event 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(baos));  	    
-    	try {
-    		JAXBContext context = JAXBContext.newInstance(Event.class);
-    		Marshaller marshaller = context.createMarshaller();
-    		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-    		logger.debug("Marshalling event " + bpafEvent + "...");
-    		marshaller.marshal(gbasEvent, writer);
-    		final byte[] xml = baos.toByteArray();
-    		// sets the objects back to the channel
-    		exchange.getOut().setBody(xml, byte[].class);  
-    	} catch (JAXBException jaxbex) {
-    		logger.error(jaxbex.fillInStackTrace());
-    		throw new EventException(jaxbex);
-    	} finally {
-			if (writer != null) {			
-				try {
-					writer.close();
-				} catch (IOException ioex) {
-					logger.error(ioex.fillInStackTrace());
-				}
-			}    		
-			if (baos != null) {			
-				try {
-					baos.close();
-				} catch (IOException ioex) {
-					logger.error(ioex.fillInStackTrace());
-				}
-			}
-		}
     }
 	/**
 	 * Saves and synchronizes the {@link es.uc3m.softlab.cbi4api.gbas.event.store.domain.Event}
@@ -95,8 +63,12 @@ public class EventWriterImpl implements EventWriter {
 	 * @throws EventException if any illegal data access or inconsistent event data error occurred.
 	 */
 	private void storeEvent(Event event) throws EventException {
-		logger.debug("Saving the event " + event + "...");
-		eventFacade.storeEvent(event);
-		logger.info("Event " + event + " stored successfully.");
+        // process the event if, and only if the event is not in quarantine
+        if (!eventQueuer.isInQuarantine(event.getActivityInstance())) {
+            logger.debug("Saving the event " + event + "...");
+            eventFacade.storeEvent(event);
+            logger.info("Event " + event + " stored successfully.");
+            eventQueuer.processEventsInQuarantine(event);
+        }
 	}
 }

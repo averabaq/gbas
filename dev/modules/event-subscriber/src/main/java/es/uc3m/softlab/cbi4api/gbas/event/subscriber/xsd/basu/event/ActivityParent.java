@@ -19,17 +19,17 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java class for Correlation complex type.
+ * <p>Java class for ActivityParent complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Correlation">
+ * &lt;complexType name="ActivityParent">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="ProcessInstanceID" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN" minOccurs="0"/>
- *         &lt;element name="CorrelationData" type="{http://www.uc3m.es/softlab/basu/event}CorrelationData" minOccurs="0"/>
+ *         &lt;element name="ActivityDefinitionID" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN"/>
+ *         &lt;element name="ActivityInstanceID" type="{http://www.w3.org/2001/XMLSchema}NMTOKEN"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,76 +39,78 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Correlation", propOrder = {
-    "processInstanceID",
-    "correlationData"
+@XmlType(name = "ActivityParent", propOrder = {
+    "activityDefinitionID",
+    "activityInstanceID"
 })
-public class Correlation
+public class ActivityParent
     implements Serializable
 {
 
     private final static long serialVersionUID = 1L;
-    @XmlElement(name = "ProcessInstanceID")
+    @XmlElement(name = "ActivityDefinitionID", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
-    protected String processInstanceID;
-    @XmlElement(name = "CorrelationData")
-    protected CorrelationData correlationData;
+    protected String activityDefinitionID;
+    @XmlElement(name = "ActivityInstanceID", required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "NMTOKEN")
+    protected String activityInstanceID;
 
     /**
-     * Gets the value of the processInstanceID property.
+     * Gets the value of the activityDefinitionID property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getProcessInstanceID() {
-        return processInstanceID;
+    public String getActivityDefinitionID() {
+        return activityDefinitionID;
     }
 
     /**
-     * Sets the value of the processInstanceID property.
+     * Sets the value of the activityDefinitionID property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setProcessInstanceID(String value) {
-        this.processInstanceID = value;
+    public void setActivityDefinitionID(String value) {
+        this.activityDefinitionID = value;
     }
 
-    public boolean isSetProcessInstanceID() {
-        return (this.processInstanceID!= null);
+    public boolean isSetActivityDefinitionID() {
+        return (this.activityDefinitionID!= null);
     }
 
     /**
-     * Gets the value of the correlationData property.
+     * Gets the value of the activityInstanceID property.
      * 
      * @return
      *     possible object is
-     *     {@link CorrelationData }
+     *     {@link String }
      *     
      */
-    public CorrelationData getCorrelationData() {
-        return correlationData;
+    public String getActivityInstanceID() {
+        return activityInstanceID;
     }
 
     /**
-     * Sets the value of the correlationData property.
+     * Sets the value of the activityInstanceID property.
      * 
      * @param value
      *     allowed object is
-     *     {@link CorrelationData }
+     *     {@link String }
      *     
      */
-    public void setCorrelationData(CorrelationData value) {
-        this.correlationData = value;
+    public void setActivityInstanceID(String value) {
+        this.activityInstanceID = value;
     }
 
-    public boolean isSetCorrelationData() {
-        return (this.correlationData!= null);
+    public boolean isSetActivityInstanceID() {
+        return (this.activityInstanceID!= null);
     }
 
 }

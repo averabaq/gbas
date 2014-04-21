@@ -56,7 +56,9 @@ public class EventConverterImpl implements EventConverter {
     /** Model session facade */
     @Autowired private ModelFacade modelFacade;
     /** Event correlator component */
-    @Autowired private EventCorrelator eventCorrelator;   
+    @Autowired private EventCorrelator eventCorrelator;
+    /** Event queue for handling events in quarantine state */
+    @Autowired private EventQueuer eventQueuer;
     
     /**
      * Convert the input event contents in BPAF-F4BPA extension format into 
@@ -87,7 +89,7 @@ public class EventConverterImpl implements EventConverter {
 		evt.setProcessInstance(processInstance);
 
 		/* correlates the event by obtaining an existing activity instance or creating a new one if necessary */
-		ActivityInstance activityInstance = eventCorrelator.correlateActivity(event, source);		
+		ActivityInstance activityInstance = eventCorrelator.correlateActivity(event, source);
 		/* sets the activity instance */
 		evt.setActivityInstance(activityInstance);
 		
@@ -114,7 +116,17 @@ public class EventConverterImpl implements EventConverter {
 		if (event.getCorrelation().isSetCorrelationData()) {
 			/* adds the event correlation data */
 			evt.setCorrelations(transformCorrelation(evt, event.getCorrelation().getCorrelationData().getCorrelationElement()));			
-		}		
+		}
+
+        // if the activity instance is in quarantine, the event can't be processed yet.
+        // it needs to wait for previous event sequences to come.
+        if (eventQueuer.isInQuarantine(evt.getActivityInstance())) {
+            if (evt.getActivityInstance().getParent() == null) {
+                logger.debug("Critical point!");
+            }
+            eventQueuer.addQuarantine(evt);
+        }
+
 		return evt;		
     }  
 	/**

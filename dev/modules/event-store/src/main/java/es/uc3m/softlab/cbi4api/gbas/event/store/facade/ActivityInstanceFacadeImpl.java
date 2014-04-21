@@ -77,11 +77,11 @@ public class ActivityInstanceFacadeImpl implements ActivityInstanceFacade {
 		logger.debug("Retrieving activity instance with source data as pairs of (" + activityId + ", " + model.getSource() + ")...");
 		if (activityId == null) 
 			throw new ActivityInstanceException(StaticResources.WARN_GET_ACTIVITY_INSTANCE_WITHOUT_INSTANCE_SRC_ID,"Cannot retrieve activity instance if the source activity instance id is not properly provided.");
-		if (model.getSource() == null) 
+		if (model.getSource() == null)
 			throw new ActivityInstanceException(StaticResources.WARN_GET_ACTIVITY_INSTANCE_WITHOUT_SOURCE,"Cannot retrieve activity instance if the source is not properly provided.");
 		ActivityInstance instance = activityInstanceDAO.findBySourceData(activityId, model);
 		if (instance == null) {
-			logger.warn("Cannot get activity instance. Activity instance with source data as pairs of (" + activityId + ", " + model.getSource() + ") does not exist.");
+			logger.debug("Cannot get activity instance. Activity instance with source data as pairs of (" + activityId + ", " + model.getSource() + ") does not exist.");
 		}
 		logger.debug("Activity instance " + instance + " retrieved successfully.");
 		return instance;

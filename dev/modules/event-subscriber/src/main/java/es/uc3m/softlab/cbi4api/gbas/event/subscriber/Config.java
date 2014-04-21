@@ -72,6 +72,22 @@ public class Config {
         return value;
     }
     /**
+     * Gets the current GBAS global process name.
+     * @return GBAS global process name.
+     */
+    public String getGlobalProcessName() {
+        String value = null;
+        try {
+            ResourceBundle propFile = ResourceBundle.getBundle(StaticResources.APP_CONFIG_RESOURCE_BUNDLE);
+            value = propFile.getString(StaticResources.GBAS_GLOBAL_PROCESS_NAME_RESOURCE_BUNDLE_KEY);
+        }
+        catch (MissingResourceException mre) {
+            logger.warn(String.format("Not found '%s' property. Is it defined?", StaticResources.GBAS_GLOBAL_PROCESS_NAME_RESOURCE_BUNDLE_KEY));
+            logger.error(mre.getMessage());
+        }
+        return value;
+    }
+    /**
      * Gets the local application configuration from business logic layer. It may differ from
      * the presentation layer. 
      * 

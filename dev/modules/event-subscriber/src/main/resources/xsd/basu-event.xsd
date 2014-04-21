@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   ***********************************************************
-  * BPAF extension for GBAS component of the CBI4API system
+  * BPAF extension for BASU component of the CBI4API system
   * Credits by Michael zur Muehlen (Stevens Institute of Technology)
   * Alejandro Vera-Baquero (23/01/2013)
   ***********************************************************
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:gbas="http://www.uc3m.es/softlab/basu/event"
+	xmlns:basu="http://www.uc3m.es/softlab/basu/event"
 	xmlns:bpaf="http://www.wfmc.org/2009/BPAF2.0"
 	targetNamespace="http://www.uc3m.es/softlab/basu/event">
 	<xs:annotation>
 		<xs:documentation xml:lang="en">
 			BPAF (Business Process Analytics Format) extension for 
-			handling events in the GBAS (Business Analytics Service Unit)
+			handling events in the BASU (Business Analytics Service Unit)
 			component of the CBI4API (Cloud-based Infrastructure 
 			for Process Intelligence) system			
 		</xs:documentation>
@@ -21,36 +21,43 @@
 	
 	<xs:element name="Event">
 		<xs:annotation>
-			<xs:documentation>Business Process Analytics Format Event (Extended for GBAS-CBI4API)</xs:documentation>
+			<xs:documentation>Business Process Analytics Format Event (Extended for BASU-CBI4API)</xs:documentation>
 		</xs:annotation>	
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="EventDetails">
 					<xs:complexType>
-						<xs:attribute name="CurrentState" type="gbas:State" use="required"/>
-						<xs:attribute name="PreviousState" type="gbas:State"/>
+						<xs:attribute name="CurrentState" type="basu:State" use="required"/>
+						<xs:attribute name="PreviousState" type="basu:State"/>
 					</xs:complexType>
-				</xs:element>				
-				<xs:element name="Correlation" type="gbas:Correlation" minOccurs="1" maxOccurs="1"/>
-				<xs:element name="DataElement" minOccurs="0" maxOccurs="unbounded" type="gbas:DataElement"/>
-				<xs:element name="Payload" minOccurs="0" maxOccurs="unbounded" type="gbas:Payload"/>
+				</xs:element>
+                <xs:element name="ActivityParent" type="basu:ActivityParent" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="Correlation" type="basu:Correlation" minOccurs="1" maxOccurs="1"/>				
+				<xs:element name="DataElement" minOccurs="0" maxOccurs="unbounded" type="basu:DataElement"/>
+				<xs:element name="Payload" minOccurs="0" maxOccurs="unbounded" type="basu:Payload"/>
 			</xs:sequence>			
-			<xs:attribute name="EventID" type="gbas:ID" use="required"/>
+			<xs:attribute name="EventID" type="basu:ID" use="required"/>
 			<xs:attribute name="ServerID" type="xs:NMTOKEN" use="required"/>
 			<xs:attribute name="ProcessDefinitionID" type="xs:NMTOKEN" use="required"/>
 			<xs:attribute name="ProcessName" type="xs:string"/>
 			<xs:attribute name="ActivityDefinitionID" type="xs:NMTOKEN"/>
 			<xs:attribute name="ActivityInstanceID" type="xs:NMTOKEN"/>
-			<xs:attribute name="ActivityParentID" type="xs:NMTOKEN"/>
 			<xs:attribute name="ActivityName" type="xs:string"/>
 			<xs:attribute name="Timestamp" type="xs:dateTime" use="required"/>			
 		</xs:complexType>
-	</xs:element>	
-	
- 	<xs:complexType name="Correlation">
- 		<xs:sequence>
+	</xs:element>
+
+    <xs:complexType name="ActivityParent">
+        <xs:sequence>
+            <xs:element name="ActivityDefinitionID" type="xs:NMTOKEN" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ActivityInstanceID" type="xs:NMTOKEN" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+
+ 	<xs:complexType name="Correlation"> 	
+ 		<xs:sequence> 			 			
  			<xs:element name="ProcessInstanceID" type="xs:NMTOKEN" minOccurs="0"/>
-			<xs:element name="CorrelationData" type="gbas:CorrelationData" minOccurs="0"/>
+			<xs:element name="CorrelationData" type="basu:CorrelationData" minOccurs="0"/>
  		</xs:sequence>
 	</xs:complexType>	
 		
@@ -92,7 +99,7 @@
  
  	<xs:complexType name="CorrelationData"> 	
  		<xs:sequence> 			 			
- 			<xs:element name="CorrelationElement" type="gbas:CorrelationElement" minOccurs="1" maxOccurs="unbounded" />
+ 			<xs:element name="CorrelationElement" type="basu:CorrelationElement" minOccurs="1" maxOccurs="unbounded" /> 				
  		</xs:sequence>
 	</xs:complexType>
 

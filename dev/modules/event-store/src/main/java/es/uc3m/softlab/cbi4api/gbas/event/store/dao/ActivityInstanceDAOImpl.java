@@ -124,7 +124,7 @@ public class ActivityInstanceDAOImpl implements ActivityInstanceDAO {
 	 */
     @Override
 	public ActivityInstance findBySourceData(String activityId, Model model) throws IllegalArgumentException {
-		logger.debug("Retrieving activity instance with source data as pairs of (" + activityId + ", " + model.getSource() + ")...");
+		logger.debug("Retrieving activity instance with source data as pairs of (" + activityId + ", " + model.getId() + ")...");
 		Model _model = modelDAO.findBySourceData(model.getModelSrcId(), model.getSource(), ModelType.ACTIVITY);
 		if (_model == null)
 			return null;
@@ -134,12 +134,12 @@ public class ActivityInstanceDAOImpl implements ActivityInstanceDAO {
     	// caching previous query parameters. 
     	//
     	StringBuffer sql = new StringBuffer("select a from [ENTITY] a ");
-    	sql.append("where a.instanceSrcId = :sourceId ");
+    	sql.append("where a.instanceSrcId = :activityId ");
     	sql.append("and a.model = :modelId ");
     	// set parameters
     	String _sql = sql.toString();
     	_sql = _sql.replace("[ENTITY]", HActivityInstance.class.getName());
-    	_sql = _sql.replace(":sourceId", "'" + activityId + "'");
+    	_sql = _sql.replace(":activityId", "\"" + activityId + "\"");
     	_sql = _sql.replace(":modelId", "" + _model.getId() + "");
     	// creates query without setting parameters
     	Query query = entityManager.createQuery(_sql);
@@ -164,10 +164,12 @@ public class ActivityInstanceDAOImpl implements ActivityInstanceDAO {
 			return null;
 		} catch(NonUniqueResultException nurex) {
 			logger.error(nurex.fillInStackTrace());
-			logger.fatal("This message should never appear. Inconsistence in the database has been found. There exists two or more different local activity instances for a unique pair of source and source activity instances.");			
-			throw new IllegalArgumentException("Inconsistence in the database has been found. There exists two or more different local activity instances for a unique pair of source and source activity instances.");
+			logger.fatal("This message should never appear. Inconsistency in the database has been found. There exists two or more different local activity instances for a unique pair of source and source activity instances.");			
+			throw new IllegalArgumentException("Inconsistency in the database has been found. There exists two or more different local activity instances for a unique pair of source and source activity instances.");
 		}
-		ActivityInstance instance = BusinessObjectAssembler.getInstance().toBusinessObject(hinstance);
+        // gets the activity instance to undertake the event correlation
+        ActivityInstance instance = findById(hinstance.getId());
+        logger.debug("Activity instance " + instance + " retrieved successfully.");
 		return instance;
 	}    	
 	/**
@@ -186,7 +188,7 @@ public class ActivityInstanceDAOImpl implements ActivityInstanceDAO {
     @Override
     @SuppressWarnings("unchecked")
     public ActivityInstance findBySourceData(Set<EventCorrelation> correlation, Model model) throws IllegalArgumentException {
-    	logger.debug("Retrieving activity instance associted to a determined correlation data from the model " + model + " associated to the source " + model.getSource() + "...");
+    	logger.debug("Retrieving activity instance associated to a determined correlation data from the model " + model + "...");
 		if (correlation == null || correlation.isEmpty()) {
 			throw new IllegalArgumentException("Cannot retrieve activity instance because no correlation data has been provided.");
 		}

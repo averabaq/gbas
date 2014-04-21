@@ -79,13 +79,21 @@ public class HIndexBuilder {
      * @param event event object with the correlation set to index.
      * @return event correlation index object.
      */
-    public HEventCorrelationIndex buildCorrelationIndex(Event event) {
-    	HEventCorrelationIndex index = new HEventCorrelationIndex();
-    	index.setEventID(event.getEventID());
-        if (event.getActivityInstance() != null)
-   		    index.setCorrelationSet(getIndexKey(event.getCorrelations(), event.getActivityInstance().getModel()));
-        else
-            index.setCorrelationSet(getIndexKey(event.getCorrelations(), event.getProcessInstance().getModel()));
-		return index;
-    }    
+    public HEventCorrelationIndex buildProcessCorrelationIndex(Event event) {
+        HEventCorrelationIndex index = new HEventCorrelationIndex();
+        index.setEventID(event.getEventID());
+        index.setCorrelationSet(getIndexKey(event.getCorrelations(), event.getProcessInstance().getModel()));
+        return index;
+    }
+    /**
+     * Builds the correlation index entity object as secondary index
+     * @param event event object with the correlation set to index.
+     * @return event correlation index object.
+     */
+    public HEventCorrelationIndex buildActivityCorrelationIndex(Event event) {
+        HEventCorrelationIndex index = new HEventCorrelationIndex();
+        index.setEventID(event.getEventID());
+        index.setCorrelationSet(getIndexKey(event.getCorrelations(), event.getActivityInstance().getModel()));
+        return index;
+    }
 }
