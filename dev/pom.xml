@@ -11,7 +11,7 @@
 	<groupId>es.uc3m.softlab.cbi4api.gbas</groupId>
 	<artifactId>gbas-prj</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<inceptionYear>2013</inceptionYear>	
 	<name>CBI4API (GBAS) - Main Project</name>
 	<description>
@@ -35,7 +35,7 @@
 		<url>http://git.verasoft.es/cbi4api/gbas.git</url>
 		<connection>scm:git:ssh://git.verasoft.es/var/git/cbi4api/gbas.git</connection>
 		<developerConnection>scm:git:ssh://git.verasoft.es/var/git/cbi4api/gbas.git</developerConnection>
-		<tag>HEAD</tag>		
+		<tag>gbas-1.0.2</tag>		
 	</scm>
 	<ciManagement>
 		<system>teamcity</system>
