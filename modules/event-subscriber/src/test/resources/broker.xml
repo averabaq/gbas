@@ -1,0 +1,42 @@
+<!-- this is a spring XML file where we have ActiveMQ Broker embedded -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:broker="http://activemq.apache.org/schema/core"
+       xsi:schemaLocation="http://activemq.apache.org/schema/core 
+       					   http://activemq.apache.org/schema/core/activemq-core.xsd
+       					   http://www.springframework.org/schema/beans 
+       					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+    <!-- GBAS create an ActiveMQ broker -->
+    <broker id="gbasBroker" brokerName="gbasBroker" useShutdownHook="false" useJmx="true"
+                   persistent="true" dataDirectory="target/activemq-data"
+                   xmlns="http://activemq.apache.org/schema/core"> 
+
+		<systemUsage>
+			<systemUsage>
+				<memoryUsage>
+					<memoryUsage limit="40 mb" />
+				</memoryUsage>
+				<storeUsage>
+					<storeUsage limit="20 gb" />
+				</storeUsage>
+				<tempUsage>
+					<tempUsage limit="2 gb" />
+				</tempUsage>
+			</systemUsage>
+		</systemUsage>
+		                   
+        <transportConnectors>
+            <!-- vm transport for intra-jvm communication -->
+            <transportConnector name="vm" uri="vm://gbasBroker"/>
+            <!-- tcp for external communication -->
+            <transportConnector name="tcp" uri="tcp://0.0.0.0:61616"/>
+        </transportConnectors>
+        
+        <!-- destroy the spring context on shutdown -->
+		<shutdownHooks>
+			<bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
+		</shutdownHooks>
+		
+    </broker>
+</beans>
