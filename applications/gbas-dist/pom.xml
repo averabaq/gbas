@@ -53,13 +53,6 @@
 			</notifier>
 		</notifiers>
 	</ciManagement>
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<url>http://nexus.verasoft.es/nexus/content/repositories/public</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
     <dependencies>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
