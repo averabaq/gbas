@@ -673,7 +673,7 @@
 		<vendor-url>http://www.uc3m.es</vendor-url>	
 		<org.apache.hadoop.version>1.1.1</org.apache.hadoop.version>
 		<org.apache.hbase.version>0.94.4</org.apache.hbase.version>
-		<org.apache.hive.version>0.11.0</org.apache.hive.version>
+		<org.apache.hive.version>2.3.4</org.apache.hive.version>
 		<org.datanucleus.version>3.2.0-release</org.datanucleus.version>
 		<org.apache.activemq.version>5.8.0</org.apache.activemq.version>
 		<org.springframework.version>3.2.0.RELEASE</org.springframework.version>	
