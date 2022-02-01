@@ -213,7 +213,7 @@
         <org.apache.hadoop.version>1.2.1</org.apache.hadoop.version>
         <org.apache.hbase.version>0.94.18</org.apache.hbase.version>
 		<org.apache.hive.version>0.12.0</org.apache.hive.version>
-        <org.apache.tomcat.version>7.0.53</org.apache.tomcat.version>
+        <org.apache.tomcat.version>8.5.75</org.apache.tomcat.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>
